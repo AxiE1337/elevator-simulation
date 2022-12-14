@@ -6,14 +6,19 @@ import { setStorageItem, getStorageItem } from './helpers/storage'
 import Floor from './components/floor.vue'
 import Elevator from './components/elevator.vue'
 
-const savedFloor = Number(getStorageItem('data')?.floor) || 1
-const savedQueue = getStorageItem('data')?.elevatorQueue || []
+interface IStorage {
+  floor: number
+  elevatorQueue: number[]
+}
 
-const floorState = ref<number>(savedFloor) // whitch floor to go on
+const savedData = getStorageItem('data') as IStorage // elevator data saves in local sotorage
+
+const floorState = ref<number>(savedData?.floor || 1) // whitch floor to go on
 const directionState = ref<number>(1) // positive up negative down
-const durationState = ref<number>(1) // seconds
+const durationState = ref<number>(1) // how fast elevator will travel. 1 seconds a floor as default
+const waitingState = ref<number>(3) // how long elevator will be waiting after arrival to a floor. 3 seconds as default
 const elevatorState = ref<string>('idle') // what elevator is doing rn
-const elevatorQueue = ref<number[]>(savedQueue) // a list of floors elevator has to visit
+const elevatorQueue = ref<number[]>(savedData?.elevatorQueue || []) // a list of floors elevator has to visit
 
 const floors: number[] = generateFloors(5) // how many floors
 
@@ -43,7 +48,7 @@ const elevatorHandler = (floorIndex: number) =>
         if (elevatorQueue.value.length > 0) {
           promises()
         }
-      }, 3000)
+      }, waitingState.value * 1000)
     }, durationState.value * 1000)
   })
 
@@ -63,6 +68,8 @@ const floorHandler = async (floorIndex: number) => {
 const promises = async () => {
   await elevatorHandler(elevatorQueue.value[0])
 }
+
+// executes if there is a saved queue in local storage
 if (elevatorQueue.value.length > 0) {
   promises()
 }
