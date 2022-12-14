@@ -43,7 +43,7 @@ defineProps<{
   align-items: flex-start;
   justify-content: center;
   background-color: #eeeeee;
-  animation: ease-in-out;
+  animation: ease;
 }
 .indicators {
   width: 100%;
@@ -52,6 +52,7 @@ defineProps<{
   justify-content: center;
   align-items: center;
   text-align: center;
+  user-select: none;
 }
 .arrow {
   font-size: 2rem;

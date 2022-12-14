@@ -15,7 +15,7 @@ defineProps<{
       :disabled="isActive"
       :style="{
         color: `${isActive ? 'black' : 'white'}`,
-        backgroundColor: `${isActive ? 'orange' : '#064663'}`,
+        backgroundColor: `${isActive ? '#ECB365' : '#064663'}`,
       }"
     >
       {{ floor }}
@@ -45,8 +45,6 @@ defineProps<{
   width: 20px;
   height: 20px;
   margin-left: 1rem;
-}
-.btn:hover {
-  background-color: #06466352;
+  cursor: pointer;
 }
 </style>
