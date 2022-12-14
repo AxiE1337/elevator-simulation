@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { convertPositive } from './helpers/convertNumber'
+import { generateFloors } from './helpers/floorGenerator'
 import { setStorageItem, getStorageItem } from './helpers/storage'
 import Floor from './components/floor.vue'
 import Elevator from './components/elevator.vue'
@@ -14,7 +15,7 @@ const durationState = ref<number>(1) // seconds
 const elevatorState = ref<string>('idle') // what elevator is doing rn
 const elevatorQueue = ref<number[]>(savedQueue) // a list of floors elevator has to visit
 
-const floors: number[] = [1, 2, 3, 4, 5].reverse() // how many floors
+const floors: number[] = generateFloors(5) // how many floors
 
 const elevatorHandler = (floorIndex: number) =>
   new Promise((resolve, reject) => {
